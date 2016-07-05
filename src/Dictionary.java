@@ -14,10 +14,11 @@ public class Dictionary {
 		dic.readFile();
 		dic.buildHashTable();
 		dic.randomWord();
-		//System.out.println(dic.buckets.toString());
-		
+//		dic.lookup("reshoot");
+		// System.out.println(dic.buckets.toString());
+
 	}
-	
+
 	public void readFile() {
 		try {
 			File input = new File("dictionary1.txt");
@@ -39,14 +40,14 @@ public class Dictionary {
 		for (String line : words) {
 			boolean found = false;
 			int hashNumber = hashNumber(line);
-			
-			for(Bucket bucket : buckets) {
-				if(bucket.getId() == hashNumber) {
+
+			for (Bucket bucket : buckets) {
+				if (bucket.getId() == hashNumber && !bucket.isDuplicate(line)) {
 					bucket.add(line);
 					found = true;
 				}
 			}
-			if(!found){
+			if (!found) {
 				buckets.add(new Bucket(hashNumber, line));
 			}
 		}
@@ -108,29 +109,36 @@ public class Dictionary {
 		return longest;
 	}
 
-	private String lookup(String line) {
-		int hashNumber = hashNumber(line);		
+	private void lookup(String line) {
+		int hashNumber = hashNumber(line);
 
-		for(Bucket bucket : buckets) {
-			if(bucket.getId() == hashNumber) {
-				return bucket.toString();
+		for (Bucket bucket : buckets) {
+			if (bucket.getId() == hashNumber) {
+				for(String value : bucket.getValues()) {
+					if(isPermultation(value, line)) {
+						System.out.println(value);
+					}
+				}
+//				return bucket.toString();
 			}
 		}
-		return null;
 	}
-	protected boolean isPermultation(String word1, String word2){
-		if(sortTheWord(word1).equals(sortTheWord(word2))){
+
+	protected boolean isPermultation(String word1, String word2) {
+		if (sortTheWord(word1).equals(sortTheWord(word2))) {
 			return true;
+		} else {
+			return false;
 		}
-		else{return false;}
 	}
-	public char randomWord(){
+
+	public char randomWord() {
 		Random rnd = new Random();
-		char randWord = 0;
-		for(int i = 0;i<7;i++){
-		randWord = (char) (97 + rnd.nextInt(7));
+		String s = "";
+		for (int i = 0; i < 7; i++) {
+			s += (char)(97 + rnd.nextInt(26));
 		}
-		System.out.println(randWord);
-		return 0;	
+		System.out.println(s);
+		return 0;
 	}
 }
