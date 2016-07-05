@@ -13,18 +13,6 @@ public class Substring {
 	}
 	
 	public HashSet<String> findSubstrings() {
-		for (int i = 0; i < this.word.length(); i++) {
-			for (int j = i+1; j <= this.word.length(); j++) {
-				String sub = sortTheWord(this.word.substring(i,j));
-				if(sub.length()>1) {
-					substrings.add(sub);
-				}
-			}
-		}
-		return substrings;
-	}
-	
-	public HashSet<String> findSubstrings2() {
 		permutation("",this.word);
 		for(String s : permutations) {
 			for (int i = 0; i < s.length(); i++) {
@@ -60,8 +48,8 @@ public class Substring {
 	}
 	
 	public static void main(String[] args) {
-		Substring s = new Substring("Java");
-		System.out.println(s.findSubstrings2());
+		Substring s = new Substring("java");
+		System.out.println(s.findSubstrings());
 	}
 }
 

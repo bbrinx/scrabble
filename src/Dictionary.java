@@ -13,9 +13,8 @@ public class Dictionary {
 		Dictionary dic = new Dictionary();
 		dic.readFile();
 		dic.buildHashTable();
-		dic.randomWord();
-//		dic.lookup("reshoot");
-		// System.out.println(dic.buckets.toString());
+		
+		dic.find("stranger");
 
 	}
 
@@ -26,9 +25,7 @@ public class Dictionary {
 			String line;
 			words = new ArrayList<>();
 			while ((line = br.readLine()) != null) {
-				if (line.length() == 7) {
 					words.add(line);
-				}
 			}
 			br.close();
 		} catch (IOException e) {
@@ -119,8 +116,16 @@ public class Dictionary {
 						System.out.println(value);
 					}
 				}
-//				return bucket.toString();
 			}
+		}
+	}
+	
+	private void find(String line) {
+		Substring substring = new Substring(line);
+		HashSet<String> substrings = substring.findSubstrings();
+		
+		for(String s : substrings) {
+			lookup(s);
 		}
 	}
 
